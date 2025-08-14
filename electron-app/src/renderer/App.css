@@ -1,0 +1,244 @@
+/* ===== Reset básico ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== Fundo e cores principais ===== */
+:root {
+  --primary-color: #4CAFEF;
+  /* Azul moderno */
+  --secondary-color: #2D2F33;
+  /* Cinza escuro */
+  --bg-color: #F5F7FA;
+  /* Cinza claro */
+  --text-color: #333;
+  --white: #fff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: 16px;
+}
+
+/* ===== Cabeçalho ===== */
+header {
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Container geral ===== */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+}
+
+/* ===== Cards ===== */
+.card {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* ===== Botões ===== */
+button {
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+  background: #3b8ed8;
+}
+
+/* ===== Tabelas ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+}
+
+th {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+tr:nth-child(even) {
+  background: #f2f4f7;
+}
+
+/* ===== Inputs ===== */
+input,
+select {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(76, 175, 239, 0.5);
+}
+
+/* ===== Navegação (Menu) ===== */
+nav {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
+  background: var(--secondary-color);
+}
+
+nav a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+nav a:hover {
+  background: var(--primary-color);
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Layout geral */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Menu lateral */
+.sidebar {
+  width: 250px;
+  background-color: #1f1f1f;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h2 {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.sidebar ul li a:hover {
+  background-color: #333;
+}
+
+/* Conteúdo principal */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+/* Cards e tabelas */
+.card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table th {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Botões */
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
