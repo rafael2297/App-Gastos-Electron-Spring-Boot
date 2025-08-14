@@ -6,12 +6,16 @@ import path from 'path';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { merge } from 'webpack-merge';
-import checkNodeEnv from '../scripts/check-node-env';
-import baseConfig from './webpack.config.base';
-import webpackPaths from './webpack.paths';
 
-// When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
-// at the dev webpack config is not accidentally run in a production environment
+// Mantemos o checkNodeEnv como está
+import checkNodeEnv from '../scripts/check-node-env.js';
+import baseConfig from './webpack.config.base';
+const webpackPaths = require('./webpack.paths.js');
+
+
+const packageJson = require('../../release/app/package.json');
+
+// Garante que não rodemos o config de dev em produção
 if (process.env.NODE_ENV === 'production') {
   checkNodeEnv('development');
 }
@@ -37,8 +41,6 @@ const configuration: webpack.Configuration = {
   },
 
   plugins: [
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
       analyzerPort: 8888,
@@ -46,14 +48,11 @@ const configuration: webpack.Configuration = {
 
     new webpack.DefinePlugin({
       'process.type': '"browser"',
+      APP_VERSION: JSON.stringify(packageJson.version), // 👍 agora funciona sem erro
     }),
   ],
 
-  /**
-   * Disables webpack processing of __dirname and __filename.
-   * If you run the bundle in node.js it falls back to these values of node.js.
-   * https://github.com/webpack/webpack/issues/2010
-   */
+  // Configura o comportamento de __dirname e __filename para o Electron
   node: {
     __dirname: false,
     __filename: false,

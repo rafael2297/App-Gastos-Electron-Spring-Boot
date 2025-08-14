@@ -8,9 +8,13 @@ import { merge } from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
-import webpackPaths from './webpack.paths';
+const webpackPaths = require('./webpack.paths.js');
+
 import checkNodeEnv from '../scripts/check-node-env';
 import deleteSourceMaps from '../scripts/delete-source-maps';
+
+// ✅ Alteração: require no lugar de import com assert
+const packageJson = require('../../release/app/package.json');
 
 checkNodeEnv('production');
 deleteSourceMaps();
@@ -49,15 +53,6 @@ const configuration: webpack.Configuration = {
       analyzerPort: 8888,
     }),
 
-    /**
-     * Create global constants which can be configured at compile time.
-     *
-     * Useful for allowing different behaviour between development builds and
-     * release builds
-     *
-     * NODE_ENV should be production so that modules do not perform certain
-     * development checks
-     */
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
       DEBUG_PROD: false,
@@ -66,14 +61,10 @@ const configuration: webpack.Configuration = {
 
     new webpack.DefinePlugin({
       'process.type': '"browser"',
+      APP_VERSION: JSON.stringify(packageJson.version), // 👍 agora compatível
     }),
   ],
 
-  /**
-   * Disables webpack processing of __dirname and __filename.
-   * If you run the bundle in node.js it falls back to these values of node.js.
-   * https://github.com/webpack/webpack/issues/2010
-   */
   node: {
     __dirname: false,
     __filename: false,

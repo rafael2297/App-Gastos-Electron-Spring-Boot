@@ -5,10 +5,15 @@
 import webpack from 'webpack';
 import path from 'path';
 import { merge } from 'webpack-merge';
-import baseConfig from './webpack.config.base';
-import webpackPaths from './webpack.paths';
-import { dependencies } from '../../package.json';
-import checkNodeEnv from '../scripts/check-node-env';
+
+
+import baseConfig from './webpack.config.base.js';
+const webpackPaths = require('./webpack.paths.js');
+
+
+const { dependencies } = require('../../package.json');
+
+import checkNodeEnv from '../scripts/check-node-env.js';
 
 checkNodeEnv('development');
 
@@ -25,10 +30,8 @@ const configuration: webpack.Configuration = {
 
   externals: ['fsevents', 'crypto-browserify'],
 
-  /**
-   * Use `module` from `webpack.config.renderer.dev.js`
-   */
-  module: require('./webpack.config.renderer.dev').default.module,
+  // ✅ Adicionada extensão `.js` para o import dinâmico
+  module: require('./webpack.config.renderer.dev.js').default.module,
 
   entry: {
     renderer: Object.keys(dependencies || {}),
@@ -49,15 +52,6 @@ const configuration: webpack.Configuration = {
       name: '[name]',
     }),
 
-    /**
-     * Create global constants which can be configured at compile time.
-     *
-     * Useful for allowing different behaviour between development builds and
-     * release builds
-     *
-     * NODE_ENV should be production so that modules do not perform certain
-     * development checks
-     */
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
     }),

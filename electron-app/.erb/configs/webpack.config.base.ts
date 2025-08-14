@@ -3,9 +3,10 @@
  */
 
 import webpack from 'webpack';
-import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
-import webpackPaths from './webpack.paths';
-import { dependencies as externals } from '../../release/app/package.json';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+const webpackPaths = require('./webpack.paths.js');
+// Importa package.json de forma compatível com CommonJS
+const { dependencies: externals } = require('../../release/app/package.json');
 
 const configuration: webpack.Configuration = {
   externals: [...Object.keys(externals || {})],
@@ -20,11 +21,10 @@ const configuration: webpack.Configuration = {
         use: {
           loader: 'ts-loader',
           options: {
-            // Remove this line to enable type checking in webpack builds
-            transpileOnly: true,
+            transpileOnly: true, // sem type-check no webpack
             compilerOptions: {
-              module: 'nodenext',
-              moduleResolution: 'nodenext',
+              module: 'commonjs',
+              moduleResolution: 'node',
             },
           },
         },
@@ -34,18 +34,13 @@ const configuration: webpack.Configuration = {
 
   output: {
     path: webpackPaths.srcPath,
-    // https://github.com/webpack/webpack/issues/1114
     library: { type: 'commonjs2' },
   },
 
-  /**
-   * Determine the array of extensions that should be used to resolve modules.
-   */
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     modules: [webpackPaths.srcPath, 'node_modules'],
-    // There is no need to add aliases here, the paths in tsconfig get mirrored
-    plugins: [new TsconfigPathsPlugins()],
+    plugins: [new TsconfigPathsPlugin()],
   },
 
   plugins: [new webpack.EnvironmentPlugin({ NODE_ENV: 'production' })],
